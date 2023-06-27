@@ -55,12 +55,14 @@ pub mod id;
 pub mod linkshell;
 pub mod search;
 
+use serde::Deserialize;
+
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct LodestoneInfo {
-  pub state: State,
-  #[serde(deserialize_with = "optional_timestamp")]
-  pub updated: Option<DateTime<Utc>>,
+    pub state: State,
+    #[serde(deserialize_with = "optional_timestamp")]
+    pub updated: Option<DateTime<Utc>>,
 }
 
 enum_number!(State {
@@ -73,20 +75,19 @@ enum_number!(State {
 });
 
 fn optional_timestamp<'de, D>(deserializer: D) -> Result<Option<DateTime<Utc>>, D::Error>
-  where D: serde::de::Deserializer<'de>,
+where
+    D: serde::de::Deserializer<'de>,
 {
-  use serde::Deserialize;
-
-  match Option::<String>::deserialize(deserializer)? {
-    Some(t) => {
-      let ts: i64 = t
-        .parse()
-        .map_err(|_| serde::de::Error::invalid_value(
-          serde::de::Unexpected::Str(&t),
-          &"string containing a signed 64-bit integer",
-        ))?;
-      Ok(Some(Utc.timestamp(ts, 0)))
-    },
-    None => Ok(None),
-  }
+    match Option::<String>::deserialize(deserializer)? {
+        Some(t) => {
+            let ts: i64 = t.parse().map_err(|_| {
+                serde::de::Error::invalid_value(
+                    serde::de::Unexpected::Str(&t),
+                    &"string containing a signed 64-bit integer",
+                )
+            })?;
+            Ok(Some(Utc.timestamp_opt(ts, 0).unwrap()))
+        }
+        None => Ok(None),
+    }
 }

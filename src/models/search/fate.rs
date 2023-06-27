@@ -1,10 +1,11 @@
 use super::Metadata;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Fate {
-  #[serde(flatten)]
-  pub metadata: Metadata,
-  pub class_job_level: u64,
-  pub class_job_level_max: u64,
+    #[serde(flatten)]
+    pub metadata: Metadata,
+    pub class_job_level: u64,
+    pub class_job_level_max: u64,
 }
