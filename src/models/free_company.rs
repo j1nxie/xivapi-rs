@@ -1,15 +1,12 @@
-use crate::routes::Language;
-
 use super::{
     id::{CharacterId, FreeCompanyId},
     LodestoneInfo,
 };
-use serde::Deserialize;
-
+use crate::routes::Language;
 use chrono::{DateTime, Utc};
-
 use ffxiv_types::World;
-
+use serde::Deserialize;
+use serde_with::{formats::Flexible, serde_as, TimestampMilliSeconds};
 use url::Url;
 
 #[derive(Debug, Deserialize)]
