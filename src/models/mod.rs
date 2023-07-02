@@ -66,12 +66,12 @@ pub struct LodestoneInfo {
 }
 
 enum_number!(State {
-  None = 0,
-  Adding = 1,
-  Cached = 2,
-  NotFound = 3,
-  Blacklist = 4,
-  Private = 5,
+    None = 0,
+    Adding = 1,
+    Cached = 2,
+    NotFound = 3,
+    Blacklist = 4,
+    Private = 5,
 });
 
 fn optional_timestamp<'de, D>(deserializer: D) -> Result<Option<DateTime<Utc>>, D::Error>
