@@ -32,7 +32,6 @@ async fn integration_test() -> Result<(), anyhow::Error> {
     // let res = api.character(31546648.into()).send().await?;
 
     // let res = api.enemy(7537.into()).send().await?;
-    // let res = api.character(2.into()).send()?;
     // let res = api
     // .free_company_search()
     // .name("Mirai")
@@ -40,7 +39,6 @@ async fn integration_test() -> Result<(), anyhow::Error> {
     // .send()
     // .await;
     // let res = api.free_company(9230408911272603212.into()).send().await;
-    // let res = api.free_company(9233645873504776755.into()).send();
     // let res = api
     // .linkshell_search()
     // .name("lala world")
