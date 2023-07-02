@@ -36,7 +36,7 @@ impl<'x, 'a> Builder<'x> for CharacterBuilder<'x, 'a> {
     }
 
     fn route(&self) -> Cow<str> {
-        Cow::Owned(format!("/Character/{}", self.id.0))
+        Cow::Owned(format!("/character/{}", self.id.0))
     }
 }
 
