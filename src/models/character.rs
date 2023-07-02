@@ -188,6 +188,10 @@ enum_number!(Tribe {
     Hellsguard = 10,
     Raen = 11,
     Xaela = 12,
+    Helions = 13,
+    TheLost = 14,
+    Rava = 15,
+    Veena = 16,
 });
 
 enum_number!(Town {
