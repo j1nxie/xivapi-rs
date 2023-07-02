@@ -1,9 +1,12 @@
 use crate::{error::*, XivApi};
+use async_trait::async_trait;
+use futures::future::TryFutureExt;
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 
 /// A builder for a request to XIVAPI.
+#[async_trait]
 pub trait Builder<'x>
 where
     Self: Serialize,
@@ -19,8 +22,8 @@ where
     /// # Notes
     /// If you are doing something that changes the output, like specifying specific columns, you will
     /// need to use the `json` function to deserialise into a custom data structure.
-    fn send(&mut self) -> Result<Self::Output> {
-        let text = self.text()?;
+    async fn send(&mut self) -> Result<Self::Output> {
+        let text = self.text().await?;
         match serde_json::from_str::<ApiError>(&text) {
             Ok(e) => Err(Error::Api(e)),
             Err(_) => serde_json::from_str(&text).map_err(Error::Json),
@@ -31,16 +34,16 @@ where
     ///
     /// This is only necessary if how you're calling the route changes its default output, like only
     /// fetching specific columns.
-    fn json<T>(&mut self) -> Result<T>
+    async fn json<T>(&mut self) -> Result<T>
     where
         for<'de> T: Deserialize<'de>,
     {
-        let text = self.text()?;
+        let text = self.text().await?;
         serde_json::from_str(&text).map_err(Error::Json)
     }
 
     /// Downloads the response as text.
-    fn text(&mut self) -> Result<String> {
+    async fn text(&mut self) -> Result<String> {
         let mut route = self.api().url(&self.route());
 
         let query = serde_urlencoded::to_string(&self).map_err(Error::UrlEncode)?;
@@ -57,15 +60,16 @@ where
 
         debug!("route: {:#?}", route);
 
-        // FIXME: what the fuck.
-        let mut res = self
-            .api()
-            .client
+        let api = self.api();
+
+        api.client
             .get(route)
             .send()
-            .map_err(Error::Reqwest)?;
-
-        res.text().map_err(Error::Reqwest)
+            .map_err(Error::Reqwest)
+            .await?
+            .text()
+            .map_err(Error::Reqwest)
+            .await
     }
 
     fn api(&self) -> &'x XivApi;
