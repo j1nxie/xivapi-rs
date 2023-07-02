@@ -16,6 +16,7 @@ pub struct FreeCompanyResult {
     pub free_company_members: Option<Vec<FreeCompanyMember>>,
 }
 
+#[serde_with::serde_as]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct FreeCompany {
@@ -31,10 +32,10 @@ pub struct FreeCompany {
     pub crest: Vec<Url>,
     pub estate: Option<Estate>,
     pub focus: Vec<Focus>,
-    #[serde(deserialize_with = "crate::util::serde::ts_str::ts_str")]
+    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
     pub formed: DateTime<Utc>,
     pub grand_company: String,
-    #[serde(deserialize_with = "crate::util::serde::ts_str::ts_str")]
+    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
     pub parse_date: DateTime<Utc>,
     pub rank: u64,
     pub ranking: Ranking,
