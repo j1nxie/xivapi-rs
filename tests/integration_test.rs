@@ -1,5 +1,3 @@
-#![feature(never_type)]
-
 use xivapi::{
     models::character::{Gender, Race},
     models::search::Index,
@@ -9,9 +7,9 @@ use xivapi::{
 
 use serde::Deserialize;
 
-fn main() -> Result<(), failure::Error> {
-    let key = std::env::var("XIVAPI_KEY").unwrap();
-    let api = XivApi::with_key(&key);
+#[tokio::test]
+async fn integration_test() -> Result<(), anyhow::Error> {
+    let api = XivApi::new();
 
     // let res = api
     //   .character_search()
@@ -26,7 +24,8 @@ fn main() -> Result<(), failure::Error> {
     //   .columns(&["Name", "Server", "Race", "Gender"])
     //   .json()?;
 
-    let res = api.character(1.into()).send()?;
+    // FIXME: this is still broken
+    let res = api.character(1.into()).send().await?;
 
     // let res = api.enemy(7537.into()).send()?;
     // let res = api.character(2.into()).send()?;
