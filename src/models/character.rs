@@ -149,6 +149,7 @@ pub struct Gear {
     pub creator: Option<u64>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct GrandCompany {

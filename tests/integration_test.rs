@@ -54,6 +54,7 @@ async fn integration_test() -> Result<(), anyhow::Error> {
     Ok(())
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 struct CharInfoResult {
@@ -61,6 +62,7 @@ struct CharInfoResult {
     payload: CharInfo,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 struct CharInfo {
