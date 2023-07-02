@@ -4,13 +4,14 @@ use super::{
     id::{CharacterId, FreeCompanyId},
     LodestoneInfo,
 };
-use crate::util::serde::ts_str::ts_str;
 use chrono::{DateTime, Utc};
 use ffxiv_types::World;
 use serde::Deserialize;
+use serde_with::{formats::Flexible, serde_as, TimestampMilliSeconds};
 use std::collections::BTreeMap;
 use url::Url;
 
+#[serde_with::serde_as]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Character {
@@ -18,7 +19,7 @@ pub struct Character {
     pub id: CharacterId,
     pub name: String,
     pub nameday: String,
-    #[serde(deserialize_with = "ts_str")]
+    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
     pub parse_date: DateTime<Utc>,
     #[serde(rename = "PvPTeam")]
     pub pvp_team: Option<serde_json::Value>,
