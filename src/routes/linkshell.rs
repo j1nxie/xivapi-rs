@@ -36,7 +36,7 @@ impl<'x, 'a> Builder<'x> for LinkshellBuilder<'x, 'a> {
     }
 
     fn route(&self) -> Cow<str> {
-        Cow::Owned(format!("/Linkshell/{}", self.id.0))
+        Cow::Owned(format!("/linkshell/{}", self.id.0))
     }
 }
 

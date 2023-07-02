@@ -36,7 +36,7 @@ impl<'x, 'a> Builder<'x> for FreeCompanyBuilder<'x, 'a> {
     }
 
     fn route(&self) -> Cow<str> {
-        Cow::Owned(format!("/FreeCompany/{}", self.id.0))
+        Cow::Owned(format!("/freecompany/{}", self.id.0))
     }
 }
 

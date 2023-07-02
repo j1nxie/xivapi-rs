@@ -33,7 +33,7 @@ impl<'x, 'a> Builder<'x> for SearchBuilder<'x, 'a> {
     }
 
     fn route(&self) -> Cow<str> {
-        Cow::Borrowed("/Character/Search")
+        Cow::Borrowed("/character/search")
     }
 }
 
