@@ -268,7 +268,6 @@ macro_rules! special_enum_number {
     }
 }
 
-// TODO: check these numbers again
 special_enum_number!(Attribute {
     Strength = 1,
     Dexterity = 2,
