@@ -102,8 +102,6 @@ pub struct GamePatch {
     #[serde(rename = "ID")]
     pub id: GamePatchId,
     pub ex_version: i64,
-    #[serde(with = "crate::util::serde::int_bool")]
-    pub is_expansion: bool,
     #[serde(flatten)]
     pub names: PatchNames,
     #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
