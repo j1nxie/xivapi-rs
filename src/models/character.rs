@@ -1,13 +1,13 @@
 //! Character models.
 
 use super::{
-    id::{CharacterId, FreeCompanyId},
-    LodestoneInfo,
+    free_company::{FreeCompany, FreeCompanyMember},
+    id::{AchievementId, CharacterId, FreeCompanyId},
 };
 use chrono::{DateTime, Utc};
 use ffxiv_types::World;
 use serde::Deserialize;
-use serde_with::{formats::Flexible, serde_as, TimestampMilliSeconds};
+use serde_with::{formats::Flexible, serde_as, skip_serializing_none, TimestampMilliSeconds};
 use std::collections::BTreeMap;
 use url::Url;
 
@@ -33,28 +33,51 @@ pub struct Character {
     pub free_company_id: Option<FreeCompanyId>,
     pub gender: Gender,
     pub guardian_deity: GuardianDeity,
-    pub minions: Vec<u64>,
-    pub mounts: Vec<u64>,
     pub class_jobs: Vec<ClassJob>,
     pub gear_set: GearSet,
     pub grand_company: Option<GrandCompany>,
     pub active_class_job: ClassJob,
     pub portrait: Url,
-    #[serde(flatten)]
-    pub verification: Verification,
+    // #[serde(flatten)]
+    // pub verification: Verification,
 }
 
+#[skip_serializing_none]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct CharacterResult {
-    pub info: Info,
+    pub achievements: Option<AchievementInfo>,
+    pub achievements_public: Option<AchievementInfo>,
     pub character: Option<Character>,
+    pub free_company: Option<FreeCompany>,
+    pub free_company_members: Option<Vec<FreeCompanyMember>>,
+    pub minions: Option<Vec<MimoInfo>>,
+    pub mounts: Option<Vec<MimoInfo>>,
+    // FIXME: hacky type to get this compiled - i don't actually know what's the type for PvP teams here.
+    pub pvp_team: Option<Vec<u64>>,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
-pub struct Info {
-    pub character: LodestoneInfo,
+pub struct AchievementInfo {
+    pub list: Vec<Achievement>,
+    pub points: u64,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct MimoInfo {
+    pub icon: Url,
+    pub name: String,
+}
+
+#[serde_with::serde_as]
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Achievement {
+    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
+    pub date: DateTime<Utc>,
+    pub id: AchievementId,
 }
 
 #[derive(Debug, Deserialize)]
@@ -73,10 +96,11 @@ pub struct ClassJob {
     pub unlocked_state: UnlockedState,
 }
 
+#[skip_serializing_none]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct UnlockedState {
-    #[serde(rename = "ID", skip_serializing_if = "Option::None")]
+    #[serde(rename = "ID")]
     pub id: Option<u64>,
     pub name: String,
 }
