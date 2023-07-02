@@ -4,9 +4,9 @@ pub mod free_company;
 pub mod linkshell;
 pub mod search;
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum Language {
     #[serde(rename = "cn")]
     Chinese,
