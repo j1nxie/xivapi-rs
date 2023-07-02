@@ -1,7 +1,7 @@
 [package]
 name = "xivapi"
 version = "0.1.0"
-authors = ["Kyle Clemens <git@kyleclemens.com>"]
+authors = ["Anna Clemens <github@annaclemens.io>"]
 edition = "2021"
 
 [dependencies]
