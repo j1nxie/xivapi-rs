@@ -1,8 +1,9 @@
 //! Character models.
 
 use super::{
-    free_company::{FreeCompany, FreeCompanyMember},
+    free_company::FreeCompany,
     id::{AchievementId, CharacterId, FreeCompanyId},
+    Member,
 };
 use chrono::{DateTime, Utc};
 use ffxiv_types::World;
@@ -50,7 +51,7 @@ pub struct CharacterResult {
     pub achievements_public: Option<AchievementInfo>,
     pub character: Option<Character>,
     pub free_company: Option<FreeCompany>,
-    pub free_company_members: Option<Vec<FreeCompanyMember>>,
+    pub free_company_members: Option<Vec<Member>>,
     pub minions: Option<Vec<MimoInfo>>,
     pub mounts: Option<Vec<MimoInfo>>,
     // FIXME: hacky type to get this compiled - i don't actually know what's the type for PvP teams here.

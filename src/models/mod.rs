@@ -1,6 +1,11 @@
 //! The models representing API responses.
 
+use self::id::CharacterId;
+use crate::routes::Language;
 use chrono::{DateTime, TimeZone, Utc};
+use serde::Deserialize;
+use serde_with::skip_serializing_none;
+use url::Url;
 
 macro_rules! enum_number {
   ($name:ident { $($variant:ident = $value:expr, )* }) => {
@@ -55,14 +60,27 @@ pub mod id;
 pub mod linkshell;
 pub mod search;
 
-use serde::Deserialize;
-
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct LodestoneInfo {
     pub state: State,
     #[serde(deserialize_with = "optional_timestamp")]
     pub updated: Option<DateTime<Utc>>,
+}
+
+#[skip_serializing_none]
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Member {
+    pub avatar: Url,
+    pub feast_matches: u64,
+    #[serde(rename = "ID")]
+    pub id: CharacterId,
+    pub lang: Option<Language>,
+    pub name: String,
+    pub rank: Option<String>,
+    pub rank_icon: Option<Url>,
+    pub server: String,
 }
 
 enum_number!(State {

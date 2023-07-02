@@ -1,8 +1,4 @@
-use super::{
-    id::{CharacterId, FreeCompanyId},
-    LodestoneInfo,
-};
-use crate::routes::Language;
+use super::{id::FreeCompanyId, Member};
 use chrono::{DateTime, Utc};
 use ffxiv_types::World;
 use serde::Deserialize;
@@ -13,7 +9,7 @@ use url::Url;
 #[serde(rename_all = "PascalCase")]
 pub struct FreeCompanyResult {
     pub free_company: Option<FreeCompany>,
-    pub free_company_members: Option<Vec<FreeCompanyMember>>,
+    pub free_company_members: Option<Vec<Member>>,
 }
 
 #[serde_with::serde_as]
@@ -75,22 +71,6 @@ pub struct Reputation {
     pub name: String,
     pub rank: String,
     pub progress: u64,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct FreeCompanyMember {
-    pub avatar: Url,
-    pub feast_matches: u64,
-    pub id: CharacterId,
-    #[serde(skip_serializing_if = "Option::None")]
-    pub lang: Option<Language>,
-    pub name: String,
-    #[serde(skip_serializing_if = "Option::None")]
-    pub rank: Option<String>,
-    #[serde(skip_serializing_if = "Option::None")]
-    pub rank_icon: Option<Url>,
-    pub server: String,
 }
 
 fn ranking_u64<'de, D>(deserializer: D) -> Result<Option<u64>, D::Error>
