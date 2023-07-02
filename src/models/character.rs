@@ -35,7 +35,7 @@ pub struct Character {
     pub guardian_deity: GuardianDeity,
     pub minions: Vec<u64>,
     pub mounts: Vec<u64>,
-    pub class_jobs: BTreeMap<String, ClassJob>,
+    pub class_jobs: Vec<ClassJob>,
     pub gear_set: GearSet,
     pub grand_company: Option<GrandCompany>,
     pub active_class_job: ClassJob,
