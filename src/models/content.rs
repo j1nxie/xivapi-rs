@@ -2,6 +2,7 @@
 
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
+use serde_with::{formats::Flexible, serde_as, TimestampMilliSeconds};
 use url::Url;
 
 pub mod achievement;
@@ -94,6 +95,7 @@ pub struct Singulars {
 }
 
 /// A description of a patch.
+#[serde_with::serde_as]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct GamePatch {
@@ -104,7 +106,7 @@ pub struct GamePatch {
     pub is_expansion: bool,
     #[serde(flatten)]
     pub names: PatchNames,
-    #[serde(deserialize_with = "crate::util::serde::ts_str::ts_str")]
+    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
     pub release_date: DateTime<Utc>,
     pub version: f64,
     #[serde(default)]
