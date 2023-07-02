@@ -8,9 +8,8 @@ use ffxiv_types::World;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct SearchResult {
-    #[serde(flatten)]
     pub pagination: Pagination,
-    pub linkshells: Vec<SearchLinkshell>,
+    pub results: Vec<SearchLinkshell>,
 }
 
 #[derive(Debug, Deserialize)]
