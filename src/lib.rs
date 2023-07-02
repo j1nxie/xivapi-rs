@@ -61,7 +61,7 @@ impl XivApi {
             .join(path)
             .unwrap();
         if let Some(ref k) = self.key {
-            base.query_pairs_mut().append_pair("key", &k);
+            base.query_pairs_mut().append_pair("key", k);
         }
         base
     }

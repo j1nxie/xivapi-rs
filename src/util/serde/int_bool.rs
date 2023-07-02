@@ -1,6 +1,6 @@
 use serde::{de, Deserializer, Serializer};
 
-pub fn serialize<'a, S>(input: &'a Option<bool>, serialiser: S) -> Result<S::Ok, S::Error>
+pub fn serialize<S>(input: &Option<bool>, serialiser: S) -> Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
