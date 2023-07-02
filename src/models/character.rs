@@ -68,6 +68,17 @@ pub struct ClassJob {
     pub exp_level: u64,
     pub exp_level_max: u64,
     pub exp_level_togo: u64,
+    pub is_specialised: bool,
+    pub name: String,
+    pub unlocked_state: UnlockedState,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct UnlockedState {
+    #[serde(rename = "ID", skip_serializing_if = "Option::None")]
+    pub id: Option<u64>,
+    pub name: String,
 }
 
 #[derive(Debug, Deserialize)]
