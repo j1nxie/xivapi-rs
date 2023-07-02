@@ -12,14 +12,8 @@ use url::Url;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct FreeCompanyResult {
-    pub info: Info,
     pub free_company: Option<FreeCompany>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct Info {
-    pub free_company: LodestoneInfo,
+    pub free_company_members: Option<Vec<FreeCompanyMember>>,
 }
 
 #[derive(Debug, Deserialize)]
