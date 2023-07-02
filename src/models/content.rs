@@ -108,7 +108,7 @@ pub struct GamePatch {
     pub names: PatchNames,
     #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
     pub release_date: DateTime<Utc>,
-    pub version: f64,
+    pub version: String,
     #[serde(default)]
     pub url: Option<Url>,
     pub banner: Option<Url>,
