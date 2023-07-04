@@ -6,7 +6,7 @@ use super::{
     Member,
 };
 use chrono::{DateTime, Utc};
-use ffxiv_types::World;
+use ffxiv_types::{DataCenter, World};
 use serde::Deserialize;
 use serde_with::{formats::Flexible, serde_as, skip_serializing_none, TimestampMilliSeconds};
 use std::collections::BTreeMap;
@@ -26,7 +26,10 @@ pub struct Character {
     pub pvp_team: Option<serde_json::Value>,
     pub race: Race,
     pub tribe: Tribe,
-    pub server: World,
+    #[serde(rename = "DC")]
+    pub dc: DataCenter,
+    #[serde(rename = "Server")]
+    pub world: World,
     pub title: Option<u64>,
     pub town: Town,
     pub avatar: Url,

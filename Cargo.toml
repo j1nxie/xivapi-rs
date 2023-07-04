@@ -26,4 +26,4 @@ features = ["serde"]
 [dependencies.ffxiv_types]
 version = "1.9.0"
 default-features = false
-features = ["worlds", "with_serde"]
+features = ["worlds", "with_serde", "data_centers"]
