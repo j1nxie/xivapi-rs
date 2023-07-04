@@ -34,6 +34,7 @@ pub struct Character {
     pub town: Town,
     pub avatar: Url,
     pub bio: String,
+    pub free_company_name: Option<String>,
     pub free_company_id: Option<FreeCompanyId>,
     pub gender: Gender,
     pub guardian_deity: GuardianDeity,
