@@ -18,18 +18,18 @@ async fn integration_test() -> Result<(), anyhow::Error> {
 
     // let id = res.characters[0].id;
 
-    let res: CharInfoResult = api
-        .character(31546648.into())
-        .columns(&[
-            "Character.Name",
-            "Character.Server",
-            "Character.Race",
-            "Character.Gender",
-        ])
-        .json()
-        .await?;
+    // let res: CharInfoResult = api
+    // .character(31546648.into())
+    // .columns(&[
+    // "Character.Name",
+    // "Character.Server",
+    // "Character.Race",
+    // "Character.Gender",
+    // ])
+    // .json()
+    // .await?;
 
-    // let res = api.character(31546648.into()).send().await?;
+    let res = api.character(31546648.into()).send().await?;
 
     // let res = api.enemy(7537.into()).send().await?;
     // let res = api
