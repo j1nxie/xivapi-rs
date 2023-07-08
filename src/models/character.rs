@@ -5,14 +5,13 @@ use super::{
     id::{AchievementId, CharacterId, FreeCompanyId},
     Member,
 };
-use chrono::{DateTime, Utc};
+use chrono::{serde::ts_seconds, DateTime, Utc};
 use ffxiv_types::{DataCenter, World};
 use serde::Deserialize;
-use serde_with::{formats::Flexible, serde_as, skip_serializing_none, TimestampMilliSeconds};
+use serde_with::skip_serializing_none;
 use std::collections::BTreeMap;
 use url::Url;
 
-#[serde_with::serde_as]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Character {
@@ -20,7 +19,7 @@ pub struct Character {
     pub id: CharacterId,
     pub name: String,
     pub nameday: String,
-    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
+    #[serde(with = "ts_seconds")]
     pub parse_date: DateTime<Utc>,
     #[serde(rename = "PvPTeam")]
     pub pvp_team: Option<serde_json::Value>,
@@ -80,7 +79,7 @@ pub struct MimoInfo {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Achievement {
-    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
+    #[serde(with = "ts_seconds")]
     pub date: DateTime<Utc>,
     pub id: AchievementId,
 }

@@ -1,8 +1,7 @@
 use super::{id::FreeCompanyId, Member};
-use chrono::{DateTime, Utc};
+use chrono::{serde::ts_seconds, DateTime, Utc};
 use ffxiv_types::World;
 use serde::Deserialize;
-use serde_with::{formats::Flexible, serde_as, TimestampMilliSeconds};
 use url::Url;
 
 #[derive(Debug, Deserialize)]
@@ -28,10 +27,10 @@ pub struct FreeCompany {
     pub crest: Vec<Url>,
     pub estate: Option<Estate>,
     pub focus: Vec<Focus>,
-    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
+    #[serde(with = "ts_seconds")]
     pub formed: DateTime<Utc>,
     pub grand_company: String,
-    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
+    #[serde(with = "ts_seconds")]
     pub parse_date: DateTime<Utc>,
     pub rank: u64,
     pub ranking: Ranking,

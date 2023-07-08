@@ -1,8 +1,7 @@
 //! Content models.
 
-use chrono::{DateTime, Utc};
+use chrono::{serde::ts_seconds, DateTime, Utc};
 use serde::Deserialize;
-use serde_with::{formats::Flexible, serde_as, TimestampMilliSeconds};
 use url::Url;
 
 pub mod achievement;
@@ -104,7 +103,7 @@ pub struct GamePatch {
     pub ex_version: i64,
     #[serde(flatten)]
     pub names: PatchNames,
-    #[serde_as(as = "TimestampMilliSeconds<String, Flexible>")]
+    #[serde(with = "ts_seconds")]
     pub release_date: DateTime<Utc>,
     pub version: String,
     #[serde(default)]
