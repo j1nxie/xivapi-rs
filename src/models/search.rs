@@ -24,7 +24,7 @@ pub mod weather;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize)]
-#[serde(tag = "GameType")]
+#[serde(tag = "UrlType")]
 pub enum SearchModel {
     Achievement(self::achievement::Achievement),
     Action(self::action::Action),
