@@ -26,26 +26,26 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize)]
 #[serde(tag = "UrlType")]
 pub enum SearchModel {
-    Achievement(self::achievement::Achievement),
-    Action(self::action::Action),
-    Emote(self::emote::Emote),
+    Achievement(Metadata),
+    Action(Metadata),
+    Emote(Metadata),
     #[serde(rename = "BNpcName")]
-    Enemy(self::enemy::Enemy),
-    Fate(self::fate::Fate),
-    InstanceContent(self::instance_content::InstanceContent),
-    Item(self::item::Item),
-    Leve(self::leve::Leve),
+    Enemy(Metadata),
+    Fate(Metadata),
+    InstanceContent(Metadata),
+    Item(Metadata),
+    Leve(Metadata),
     #[serde(rename = "Companion")]
-    Minion(self::minion::Minion),
-    Mount(self::mount::Mount),
+    Minion(Metadata),
+    Mount(Metadata),
     #[serde(rename = "ENpcResident")]
-    Npc(self::npc::Npc),
-    PlaceName(self::place_name::PlaceName),
-    Quest(self::quest::Quest),
-    Recipe(self::recipe::Recipe),
-    Status(self::status::Status),
-    Title(self::title::Title),
-    Weather(self::weather::Weather),
+    Npc(Metadata),
+    PlaceName(Metadata),
+    Quest(Metadata),
+    Recipe(Metadata),
+    Status(Metadata),
+    Title(Metadata),
+    Weather(Metadata),
 }
 
 #[derive(Debug, Deserialize)]
