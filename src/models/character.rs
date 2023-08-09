@@ -9,7 +9,7 @@ use chrono::{serde::ts_seconds, DateTime, Utc};
 use ffxiv_types::{DataCenter, World};
 use serde::Deserialize;
 use serde_with::skip_serializing_none;
-use std::collections::BTreeMap;
+use std::{collections::BTreeMap, fmt::Display};
 use url::Url;
 
 #[derive(Debug, Deserialize)]
@@ -179,6 +179,19 @@ enum_number!(Race {
     AuRa = 6,
 });
 
+impl Display for Race {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Hyur => write!(f, "Hyur"),
+            Self::Elezen => write!(f, "Elezen"),
+            Self::Lalafell => write!(f, "Lalafell"),
+            Self::Miqote => write!(f, "Miqo'te"),
+            Self::Roegadyn => write!(f, "Roegadyn"),
+            Self::AuRa => write!(f, "Au Ra"),
+        }
+    }
+}
+
 enum_number!(Tribe {
     Midlander = 1,
     Highlander = 2,
@@ -198,6 +211,29 @@ enum_number!(Tribe {
     Veena = 16,
 });
 
+impl Display for Tribe {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Midlander => write!(f, "Midlander"),
+            Self::Highlander => write!(f, "Highlander"),
+            Self::Wildwood => write!(f, "Wildwood"),
+            Self::Duskwight => write!(f, "Duskwight"),
+            Self::Plainsfolk => write!(f, "Plainsfolk"),
+            Self::Dunesfolk => write!(f, "Dunesfolk"),
+            Self::SeekerOfTheSun => write!(f, "Seeker of the Sun"),
+            Self::SeekerOfTheMoon => write!(f, "Seeker of the Moon"),
+            Self::SeaWolf => write!(f, "Sea Wolf"),
+            Self::Hellsguard => write!(f, "Hellsguard"),
+            Self::Raen => write!(f, "Raen"),
+            Self::Xaela => write!(f, "Xaela"),
+            Self::Helions => write!(f, "Helions"),
+            Self::TheLost => write!(f, "The Lost"),
+            Self::Rava => write!(f, "Rava"),
+            Self::Veena => write!(f, "Veena"),
+        }
+    }
+}
+
 enum_number!(Town {
     LimsaLominsa = 1,
     Gridania = 2,
@@ -205,6 +241,18 @@ enum_number!(Town {
     Ishgard = 4,
     Kugane = 7,
 });
+
+impl Display for Town {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::LimsaLominsa => write!(f, "Limsa Lominsa"),
+            Self::Gridania => write!(f, "Gridania"),
+            Self::UlDah => write!(f, "Ul'Dah"),
+            Self::Ishgard => write!(f, "Ishgard"),
+            Self::Kugane => write!(f, "Kugane"),
+        }
+    }
+}
 
 enum_number!(Gender {
     Male = 1,
@@ -225,6 +273,25 @@ enum_number!(GuardianDeity {
     Nophica = 11,
     Althyk = 12,
 });
+
+impl Display for GuardianDeity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Halone => write!(f, "Halone"),
+            Self::Menphina => write!(f, "Menphina"),
+            Self::Thaliak => write!(f, "Thaliak"),
+            Self::Nymeia => write!(f, "Nymeia"),
+            Self::Llymlaen => write!(f, "Llymlaen"),
+            Self::Oschon => write!(f, "Oschon"),
+            Self::Byregot => write!(f, "Byregot"),
+            Self::Rhalgr => write!(f, "Rhalgr"),
+            Self::Azeyma => write!(f, "Azeyma"),
+            Self::NaldThal => write!(f, "Nald'Thal"),
+            Self::Nophica => write!(f, "Nophica"),
+            Self::Althyk => write!(f, "Althyk"),
+        }
+    }
+}
 
 // FIXME: workaround for https://github.com/serde-rs/serde/issues/1183
 macro_rules! special_enum_number {
