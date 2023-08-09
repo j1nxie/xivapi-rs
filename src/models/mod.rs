@@ -1,6 +1,11 @@
 //! The models representing API responses.
 
+use self::id::CharacterId;
+use crate::routes::Language;
 use chrono::{DateTime, TimeZone, Utc};
+use serde::Deserialize;
+use serde_with::skip_serializing_none;
+use url::Url;
 
 macro_rules! enum_number {
   ($name:ident { $($variant:ident = $value:expr, )* }) => {
@@ -58,35 +63,49 @@ pub mod search;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct LodestoneInfo {
-  pub state: State,
-  #[serde(deserialize_with = "optional_timestamp")]
-  pub updated: Option<DateTime<Utc>>,
+    pub state: State,
+    #[serde(deserialize_with = "optional_timestamp")]
+    pub updated: Option<DateTime<Utc>>,
+}
+
+#[skip_serializing_none]
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Member {
+    pub avatar: Url,
+    pub feast_matches: u64,
+    #[serde(rename = "ID")]
+    pub id: CharacterId,
+    pub lang: Option<Language>,
+    pub name: String,
+    pub rank: Option<String>,
+    pub rank_icon: Option<Url>,
+    pub server: String,
 }
 
 enum_number!(State {
-  None = 0,
-  Adding = 1,
-  Cached = 2,
-  NotFound = 3,
-  Blacklist = 4,
-  Private = 5,
+    None = 0,
+    Adding = 1,
+    Cached = 2,
+    NotFound = 3,
+    Blacklist = 4,
+    Private = 5,
 });
 
 fn optional_timestamp<'de, D>(deserializer: D) -> Result<Option<DateTime<Utc>>, D::Error>
-  where D: serde::de::Deserializer<'de>,
+where
+    D: serde::de::Deserializer<'de>,
 {
-  use serde::Deserialize;
-
-  match Option::<String>::deserialize(deserializer)? {
-    Some(t) => {
-      let ts: i64 = t
-        .parse()
-        .map_err(|_| serde::de::Error::invalid_value(
-          serde::de::Unexpected::Str(&t),
-          &"string containing a signed 64-bit integer",
-        ))?;
-      Ok(Some(Utc.timestamp(ts, 0)))
-    },
-    None => Ok(None),
-  }
+    match Option::<String>::deserialize(deserializer)? {
+        Some(t) => {
+            let ts: i64 = t.parse().map_err(|_| {
+                serde::de::Error::invalid_value(
+                    serde::de::Unexpected::Str(&t),
+                    &"string containing a signed 64-bit integer",
+                )
+            })?;
+            Ok(Some(Utc.timestamp_opt(ts, 0).unwrap()))
+        }
+        None => Ok(None),
+    }
 }
